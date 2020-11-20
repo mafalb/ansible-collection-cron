@@ -1,0 +1,9 @@
+# vim: set ft=yaml ts=2 expandtab:
+---
+
+- name: crond is absent
+  package:
+    name: "{{ crond_package_absent }}"
+    state: absent
+
+...

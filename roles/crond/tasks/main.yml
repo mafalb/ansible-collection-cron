@@ -1,0 +1,25 @@
+# vim: set ft=yaml ts=2 expandtab:
+---
+
+- name: get OS specific variables
+  with_first_found:
+  - "{{ ansible_os_family }}-{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+  - "{{ ansible_os_family }}-{{ ansible_distribution }}.yml"
+  - "{{ ansible_os_family }}-{{ ansible_distribution_release }}.yml"
+  - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+  - "{{ ansible_os_family }}.yml"
+  include_vars:
+    file: "{{ item }}"
+
+- name: assertions
+  assert:
+    that:
+    - crond_package_absent is defined
+    - crond_package is defined
+    - anacron_package is defined
+    - crond_state in [ 'present', 'absent' ]
+
+- name: include_tasks for {{ alias }}
+  include_tasks: "{{ crond_state }}.yml"
+
+...

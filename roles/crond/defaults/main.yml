@@ -1,0 +1,7 @@
+# vim: set ft=yaml ts=2 expandtab:
+---
+
+anacron: false
+crond_state: present
+
+...

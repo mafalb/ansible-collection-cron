@@ -1,0 +1,14 @@
+# vim: set ft=yaml ts=2 expandtab:
+---
+
+package_names:
+  Debian:
+    crond: cron
+    anacron: anacron
+    crond_package_absent: cron
+  RedHat:
+    crond: cronie-noanacron
+    anacron: cronie-anacron
+    crond_package_absent: cronie
+
+...

@@ -1,0 +1,37 @@
+# vim: set ft=yaml ts=2 expandtab:
+---
+
+- name: Converge proxy
+  hosts: proxy_group
+
+  pre_tasks:
+
+  # https://github.com/geerlingguy/ansible-role-composer/issues/54
+  #
+  - name: get status of systemd-tmpfiles-setup.service # noqa 303
+    command: systemctl status systemd-tmpfiles-setup.service
+    when: ansible_service_mgr == 'systemd'
+    changed_when: false
+
+  roles:
+  - name: mafalb.squid.server
+
+
+- name: Converge crond
+  hosts: crond_group, !infrastructure_group
+  roles:
+  - role: mafalb.cron.crond
+
+- name: Converge anacron
+  hosts: anacron_group, absent_group, !infrastructure_group
+  roles:
+  - role: mafalb.cron.crond
+    anacron: true
+
+- name: Remove cron
+  hosts: absent_group, !infrastructure_group
+  roles:
+  - role: mafalb.cron.crond
+    crond_state: absent
+
+...

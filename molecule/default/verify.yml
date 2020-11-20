@@ -1,0 +1,76 @@
+# vim: set ft=yaml ts=2 expandtab:
+---
+
+- name: verify crond
+  hosts: crond_group, !infrastructure_group
+
+  tasks:
+
+  - name: include package_names
+    include_vars: package_names.yml
+
+  - name: get installed packages
+    package_facts:
+
+  - debug: var=ansible_facts.packages[package_names[ansible_os_family]['crond']]
+
+  - name: crond is present
+    assert:
+      that:
+      - package_names[ansible_os_family].crond in ansible_facts.packages
+
+  - name: anacron is not present
+    assert:
+      that:
+      - package_names[ansible_os_family].anacron not in ansible_facts.packages
+
+
+- name: verify anacron
+  hosts: anacron_group, !infrastructure_group
+
+  tasks:
+
+  - name: include package_names
+    include_vars: package_names.yml
+
+  - name: get installed packages
+    package_facts:
+
+  - name: crond is present
+    assert:
+      that:
+      - package_names[ansible_os_family].crond in ansible_facts.packages
+
+  - name: anacron is present
+    assert:
+      that:
+      - package_names[ansible_os_family].anacron in ansible_facts.packages
+
+
+- name: verify cron
+  hosts: absent_group, !infrastructure_group
+
+  tasks:
+
+  - name: include package_names
+    include_vars: package_names.yml
+
+  - name: get installed packages
+    package_facts:
+
+  - name: crond is not present
+    assert:
+      that:
+      - package_names[ansible_os_family].crond_package_absent not in ansible_facts.packages
+
+  - name: crond is not present
+    assert:
+      that:
+      - package_names[ansible_os_family].crond not in ansible_facts.packages
+
+  - name: anacron is not present
+    assert:
+      that:
+      - package_names[ansible_os_family].anacron not in ansible_facts.packages
+
+...

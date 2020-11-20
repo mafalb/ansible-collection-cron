@@ -1,0 +1,27 @@
+# vim: set ft=yaml ts=2 expandtab:
+---
+
+namespace: mafalb
+name: cron
+version: 0.0.1
+readme: README.md
+
+authors:
+- Markus Falb <markus.falb@mafalb.at>
+
+description: Ansible collection cron
+
+license:
+- GPL-3.0-or-later
+
+tags:
+- cron
+
+dependencies: {}
+
+repository: https://github.com/mafalb/ansible-collection-cron
+documentation: https://github.com/mafalb/ansible-collection-cron
+homepage: https://github.com/mafalb/ansible-collection-cron
+issues: https://github.com/mafalb/ansible-collection-cron/issues
+
+...
