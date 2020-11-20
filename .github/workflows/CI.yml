@@ -4,7 +4,13 @@
 name: CI
 
 on:
+
   push:
+    branches:
+    - '**'
+    tags-ignore:
+    - '*'
+
   schedule:
     - cron: '40 10 * * 6'
 
