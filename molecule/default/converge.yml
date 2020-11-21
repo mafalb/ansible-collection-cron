@@ -28,10 +28,4 @@
   - role: mafalb.cron.crond
     anacron: true
 
-- name: Remove cron
-  hosts: absent_group, !infrastructure_group
-  roles:
-  - role: mafalb.cron.crond
-    crond_state: absent
-
 ...

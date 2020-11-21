@@ -1,0 +1,10 @@
+# vim: set ft=yaml ts=2 expandtab:
+---
+
+- name: Remove cron
+  hosts: absent_group, !infrastructure_group
+  roles:
+  - role: mafalb.cron.crond
+    crond_state: absent
+
+...
