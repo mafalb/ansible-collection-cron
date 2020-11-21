@@ -3,6 +3,6 @@
 
 crond_package_absent: cron
 crond_package: cron
-anacron_packages: anacron
+anacron_package: anacron
 
 ...
