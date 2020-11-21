@@ -3,7 +3,10 @@
 
 - name: crond is absent
   package:
-    name: "{{ crond_package_absent }}"
+    name:
+    - "{{ crond_package_absent }}"
+    - "{{ crond_package }}"
+    - "{{ anacron_package }}"
     state: absent
 
 ...

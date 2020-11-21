@@ -5,4 +5,5 @@ crond_package_absent: cronie
 crond_package: cronie-noanacron
 anacron_package: cronie-anacron
 
+crond_service: crond
 ...

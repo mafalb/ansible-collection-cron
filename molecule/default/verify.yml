@@ -47,7 +47,7 @@
       - package_names[ansible_os_family].anacron in ansible_facts.packages
 
 
-- name: verify cron
+- name: verify absent
   hosts: absent_group, !infrastructure_group
 
   tasks:

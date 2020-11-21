@@ -13,7 +13,7 @@
 
 - name: crond is started
   service:
-    name: crond
+    name: "{{ crond_service }}"
     state: started
     enabled: true
 
