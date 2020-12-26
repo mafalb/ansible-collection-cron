@@ -15,9 +15,6 @@ lint: |
   ansible-lint roles/*/vars/*.yml
   flake8 -v
 
-# do not change the name of 
-# the network molecule-internal
-# it is hardcoded in create.yml
 platforms:
 - name: ci_${CI_CONTAINER_IMAGE:-centos}${CI_CONTAINER_TAG:-7}-1
   image: ${CI_CONTAINER_IMAGE:-centos}:${CI_CONTAINER_TAG:-7}
@@ -36,7 +33,8 @@ platforms:
   - /run/lock
   capabilities:
   - SYS_ADMIN
-  privileged: ${CI_CONTAINER_PRIVILEGED:-false}
+#  privileged: ${CI_CONTAINER_PRIVILEGED:-false}
+  privileged: true
   pre_build_image: ${CI_CONTAINER_PREBUILT:-false}
   tty: true
   groups:
@@ -58,7 +56,8 @@ platforms:
   - /tmp
   capabilities:
   - SYS_ADMIN
-  privileged: ${CI_CONTAINER_PRIVILEGED:-false}
+#  privileged: ${CI_CONTAINER_PRIVILEGED:-false}
+  privileged: true
   pre_build_image: ${CI_CONTAINER_PREBUILT:-false}
   tty: true
   groups:
@@ -81,7 +80,8 @@ platforms:
   - /run/lock
   capabilities:
   - SYS_ADMIN
-  privileged: ${CI_CONTAINER_PRIVILEGED:-false}
+#  privileged: ${CI_CONTAINER_PRIVILEGED:-false}
+  privileged: true
   pre_build_image: ${CI_CONTAINER_PREBUILT:-false}
   tty: true
   groups:
