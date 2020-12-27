@@ -51,6 +51,7 @@ platforms:
   tmpfs:
   - /run
   - /tmp
+  - /run/lock
   capabilities:
   - SYS_ADMIN
   privileged: ${CI_CONTAINER_PRIVILEGED:-false}
