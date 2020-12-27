@@ -19,11 +19,17 @@
 
 - name: Converge crond
   hosts: crond_group, !infrastructure_group
+  environment:
+    http_proxy: http://ci-proxy:3128
+    https_proxy: http://ci-proxy:3128
   roles:
   - role: mafalb.cron.crond
 
 - name: Converge anacron
   hosts: anacron_group, absent_group, !infrastructure_group
+  environment:
+    http_proxy: http://ci-proxy:3128
+    https_proxy: http://ci-proxy:3128
   roles:
   - role: mafalb.cron.crond
     anacron: true
