@@ -16,7 +16,7 @@ lint: |
   flake8 -v
 
 platforms:
-- name: ci_${CI_CONTAINER_IMAGE:-centos}${CI_CONTAINER_TAG:-7}-1
+- name: ci-${CI_CONTAINER_IMAGE:-centos}${CI_CONTAINER_TAG:-7}-1
   image: ${CI_CONTAINER_IMAGE:-centos}:${CI_CONTAINER_TAG:-7}
   command: /lib/systemd/systemd
   docker_networks:
@@ -24,7 +24,6 @@ platforms:
     internal: true
   networks:
   - name: molecule-internal
-  - name: molecule-external
   volumes:
   - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
   tmpfs:
@@ -33,14 +32,13 @@ platforms:
   - /run/lock
   capabilities:
   - SYS_ADMIN
-#  privileged: ${CI_CONTAINER_PRIVILEGED:-false}
-  privileged: true
+  privileged: ${CI_CONTAINER_PRIVILEGED:-false}
   pre_build_image: ${CI_CONTAINER_PREBUILT:-false}
   tty: true
   groups:
   - crond_group
 
-- name: ci_${CI_CONTAINER_IMAGE:-centos}${CI_CONTAINER_TAG:-7}-2
+- name: ci-${CI_CONTAINER_IMAGE:-centos}${CI_CONTAINER_TAG:-7}-2
   image: ${CI_CONTAINER_IMAGE:-centos}:${CI_CONTAINER_TAG:-7}
   command: /lib/systemd/systemd
   docker_networks:
@@ -48,7 +46,6 @@ platforms:
     internal: true
   networks:
   - name: molecule-internal
-  - name: molecule-external
   volumes:
   - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
   tmpfs:
@@ -56,14 +53,13 @@ platforms:
   - /tmp
   capabilities:
   - SYS_ADMIN
-#  privileged: ${CI_CONTAINER_PRIVILEGED:-false}
-  privileged: true
+  privileged: ${CI_CONTAINER_PRIVILEGED:-false}
   pre_build_image: ${CI_CONTAINER_PREBUILT:-false}
   tty: true
   groups:
   - anacron_group
 
-- name: ci_${CI_CONTAINER_IMAGE:-centos}${CI_CONTAINER_TAG:-7}-3
+- name: ci-${CI_CONTAINER_IMAGE:-centos}${CI_CONTAINER_TAG:-7}-3
   image: ${CI_CONTAINER_IMAGE:-centos}:${CI_CONTAINER_TAG:-7}
   command: /lib/systemd/systemd
   docker_networks:
@@ -71,7 +67,6 @@ platforms:
     internal: true
   networks:
   - name: molecule-internal
-  - name: molecule-external
   volumes:
   - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
   tmpfs:
@@ -80,14 +75,13 @@ platforms:
   - /run/lock
   capabilities:
   - SYS_ADMIN
-#  privileged: ${CI_CONTAINER_PRIVILEGED:-false}
-  privileged: true
+  privileged: ${CI_CONTAINER_PRIVILEGED:-false}
   pre_build_image: ${CI_CONTAINER_PREBUILT:-false}
   tty: true
   groups:
   - absent_group
 
-- name: ci_proxy
+- name: ci-proxy
   image: centos:8
   command: /lib/systemd/systemd
   networks:
