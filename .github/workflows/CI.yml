@@ -18,7 +18,7 @@ jobs:
 
   CI:
 
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     strategy:
 
@@ -38,7 +38,7 @@ jobs:
         - debian10
 
         ansible_version:
-        - '2.9.16rc1'
+        - '2.9'
         - '2.10'
 
         include:
