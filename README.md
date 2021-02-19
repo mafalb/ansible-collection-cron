@@ -13,4 +13,6 @@ A collection for cron related things.
 
 ## License
 
-GPLv3
+Copyright (c) 2020,2021 Markus Falb <markus.falb@mafalb.at>
+
+GPL-3.0-or-later
