@@ -32,8 +32,8 @@ jobs:
         - ubuntu-16.04
         - ubuntu-18.04
         - ubuntu-20.04
-        - fedora32
         - fedora33
+        - fedora34
         - debian9
         - debian10
 
@@ -63,13 +63,13 @@ jobs:
           distribution: ubuntu
           version: focal
 
-        - target: fedora32
-          distribution: fedora
-          version: 32
-
         - target: fedora33
           distribution: fedora
           version: 33
+
+        - target: fedora34
+          distribution: fedora
+          version: 34
 
         - target: debian9
           distribution: debian
@@ -97,18 +97,17 @@ jobs:
       with:
         path: ansible_collections/mafalb/cron
 
-    - name: install system ansible
-      run: sudo apt install ansible
-
     # note: this uses ansible-galaxy from preinstalled ansible (2.10)
     #
     - name: install mafalb.ansible
-      run: ansible-galaxy collection install -r molecule/requirements.yml
+      run: ansible-galaxy collection install mafalb.ansible
 
     # note: this uses ansible-playbook from system ansible
     #
     - name: install molecule
-      run: /usr/bin/ansible-playbook -D ~/.ansible/collections/ansible_collections/mafalb/ansible/playbooks/molecule.yml -e molecule_ansible_version=$ANSIBLE_VERSION -t all,debug
+      run: |
+        sudo apt install ansible
+        /usr/bin/ansible-playbook -D ~/.ansible/collections/ansible_collections/mafalb/ansible/playbooks/molecule.yml -e molecule_ansible_version=$ANSIBLE_VERSION -t all,debug
 
     - name: check ansible version
       run: |
