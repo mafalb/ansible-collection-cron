@@ -27,21 +27,36 @@ jobs:
       matrix:
 
         target:
+        - fedora33
+        - fedora34
+        - centosstream8
         - centos7
         - centos8
+        - alma8
+        - debian9
+        - debian10
         - ubuntu-16.04
         - ubuntu-18.04
         - ubuntu-20.04
-        - fedora32
-        - fedora33
-        - debian9
-        - debian10
 
         ansible_version:
         - '2.9'
         - '2.10'
 
         include:
+
+        - target: fedora33
+          distribution: fedora
+          version: 33
+
+        - target: fedora34
+          distribution: fedora
+          version: 34
+
+        - target: centosstream8
+          distribution: centos
+          registry: "quay.io/centos/"
+          version: stream8
 
         - target: centos7
           distribution: centos
@@ -50,6 +65,21 @@ jobs:
         - target: centos8
           distribution: centos
           version: 8
+
+        - target: alma8
+          distribution: almalinux
+          registry: "docker.io/almalinux/"
+          version: 8
+          test_molecule: true
+          test_controlnode: true
+
+        - target: debian9
+          distribution: debian
+          version: stretch
+
+        - target: debian10
+          distribution: debian
+          version: buster
 
         - target: ubuntu-16.04
           distribution: ubuntu
@@ -63,24 +93,9 @@ jobs:
           distribution: ubuntu
           version: focal
 
-        - target: fedora32
-          distribution: fedora
-          version: 32
-
-        - target: fedora33
-          distribution: fedora
-          version: 33
-
-        - target: debian9
-          distribution: debian
-          version: stretch
-
-        - target: debian10
-          distribution: debian
-          version: buster
-
     env:
       ANSIBLE_VERSION: ${{ matrix.ansible_version }}
+      CI_REGISTRY: ${{ matrix.registry }}
       CI_CONTAINER_IMAGE: ${{ matrix.distribution }}
       CI_CONTAINER_TAG: ${{ matrix.version }}
       PY_COLORS: 1
@@ -97,18 +112,17 @@ jobs:
       with:
         path: ansible_collections/mafalb/cron
 
-    - name: install system ansible
-      run: sudo apt install ansible
-
     # note: this uses ansible-galaxy from preinstalled ansible (2.10)
     #
     - name: install mafalb.ansible
-      run: ansible-galaxy collection install -r molecule/requirements.yml
+      run: ansible-galaxy collection install mafalb.ansible
 
     # note: this uses ansible-playbook from system ansible
     #
     - name: install molecule
-      run: /usr/bin/ansible-playbook -D ~/.ansible/collections/ansible_collections/mafalb/ansible/playbooks/molecule.yml -e molecule_ansible_version=$ANSIBLE_VERSION -t all,debug
+      run: |
+        sudo apt install ansible
+        /usr/bin/ansible-playbook -D ~/.ansible/collections/ansible_collections/mafalb/ansible/playbooks/molecule.yml -e molecule_ansible_version=$ANSIBLE_VERSION -t all,debug
 
     - name: check ansible version
       run: |

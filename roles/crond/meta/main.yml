@@ -4,7 +4,7 @@
 galaxy_info:
   author: Markus
   description: Ansible role mafalb.cron.crond
-  license: GPLv3
+  license: GPL-3.0-or-later
   min_ansible_version: 2.9
 
   # https://galaxy.ansible.com/api/v1/platforms/
